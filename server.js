@@ -37,8 +37,16 @@ app.use(express.static("public"));
 // var routes = require("./controllers/articlesController.js");
 // app.use(routes);
 
+// If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+
+// Set mongoose to leverage built in JavaScript ES6 Promises
+// Connect to the Mongo DB
+mongoose.Promise = Promise;
+mongoose.connect(MONGODB_URI);
 // Connect to the Mongo DB
 mongoose.connect("mongodb://localhost/populateMongo");
+
 
 // Routes
 
@@ -48,10 +56,7 @@ app.get("/scrape", function (req, res, error) {
   if (error) {
     console.log(error);
   }
-  // axios.get("http://www.richmond.com/").then(function(response) {
-  // Then, we load that into cheerio and save it to $ for a shorthand selector
-  // var $ = cheerio.load(response.data);
-  // request("http://www.richmond.com", function (error, response, html) {
+  
   request("http://www.wric.com", function (error, response, html) {
 
     // Load the HTML into cheerio and save it to a variable
@@ -78,7 +83,7 @@ app.get("/scrape", function (req, res, error) {
         link: link,
         summary: summary
       });
-      console.log("how about here");
+      
       console.log(results);
     });
     // Now, we grab every h2 within an article tag, and do the following:
@@ -134,7 +139,7 @@ app.get("/articles/:id", function (req, res) {
       _id: req.params.id
     })
     // ..and populate all of the notes associated with it
-    .populate("note")
+    .populate("note-name")
     .then(function (dbArticle) {
       // If we were able to successfully find an Article with the given id, send it back to the client
       res.json(dbArticle);

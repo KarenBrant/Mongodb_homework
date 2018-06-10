@@ -62,8 +62,17 @@
           </button>
         </div>
         <div class="modal-body">
-          <!-- <p id='titleinput'> + data.title + </p>
-          <p id='bodyinput'>" + data.notes + "</p> -->
+            <form>
+                <div class="form-group">
+                  <label for="note-name" class="col-form-label">Note:</label>
+                  <input type="text" class="form-control" id="note-name">
+                </div>
+              </form>
+          <!--
+            Put a form w/ textarea for notes here:
+            - When modal opens, add the ID of clicked article to the form, either to the action attr, or as a data-article-id attr
+            - Have some JS listening for the form's submit action. Intercept data and PUT to an express endpoint that updates article notes
+          -->
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -74,7 +83,7 @@
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-  <script src="app.js"></script>
+  <script src="public/assets/app.js"></script>
 </body>
 
 </html>
